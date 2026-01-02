@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Counter – Single Queue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <!-- Extracted Styles -->
+  <link rel="stylesheet" href="css/single-counter.css">
+</head>
+
+<body>
+
+<!-- ROLE CHECK (counter + admin only) -->
+<script>
+  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) return window.location.href = "login.html";
+
+    const doc = await firestore.collection("users").doc(user.uid).get();
+    if (!doc.exists) return window.location.href = "index.html";
+
+    const role = doc.data().role || "guest";
+
+    if (role !== "counter" && role !== "admin") {
+      return window.location.href = "index.html";
+    }
+  });
+</script>
+
+<h1>Main Counter</h1>
+
+<!-- ORDER INPUT -->
+<div class="kiosk-container">
+  <input id="inputOrderNumber" class="kiosk-input" type="number" placeholder="Order Number">
+  <button id="btnAddOrder" class="kiosk-button">ADD ORDER</button>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn filter-waiting filter-active" id="btnFilterWaiting">⏳ Waiting</button>
+  <button class="filter-btn filter-prep" id="btnFilterPrep">🧑‍🍳 In Prep</button>
+  <button class="filter-btn filter-ready" id="btnFilterReady">🔥 Ready</button>
+  <button class="filter-btn filter-delivered" id="btnFilterDelivered">📦 Delivered</button>
+  <button class="filter-btn filter-all" id="btnFilterAll">⭐ All</button>
+  <button class="filter-btn clear-btn" id="btnClearDelivered">🗑 Clear Delivered</button>
+</div>
+
+<!-- ORDER TILES -->
+<div id="containerCounterTiles" class="tile-container"></div>
+
+<!-- AUDIO -->
+<audio id="audioNewOrder" src="sounds/neworder.mp3"></audio>
+
+<!-- Extracted JS -->
+<script src="js/single-counter.js"></script>
+
+</body>
+</html>

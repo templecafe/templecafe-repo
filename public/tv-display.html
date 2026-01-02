@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cafeteria – Order Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/tv-display.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+</head>
+
+<body class="safe-area">
+
+<button id="fullscreenBtn">⛶</button>
+
+<audio id="readySound" preload="auto">
+  <source src="sounds/ready.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="partialReadySound" preload="auto">
+  <source src="sounds/partial-ready.mp3" type="audio/mpeg">
+</audio>
+
+<div class="header-bar">
+  <div class="header-left">
+    <img src="images/logo.png" class="header-logo" alt="Temple Logo">
+  </div>
+
+  <div class="header-center">
+    CAFETERIA - ORDER STATUS
+  </div>
+
+  <div class="header-right"></div>
+</div>
+
+
+<div class="screen-layout">
+
+  <!-- LEFT: READY -->
+  <div class="left-side">
+    <div class="ready-section-title">🍛 READY FOR PICKUP</div>
+
+    <!-- ⭐ FIXED: scroll-box wraps the list -->
+    <div class="scroll-box">
+      <div id="readyGrid" class="ready-grid"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: IN PROGRESS + INCOMPLETE -->
+  <!-- RIGHT: PARTIALLY READY + IN PROGRESS -->
+  <div class="right-side two-columns">
+
+  <!-- PARTIALLY READY (was INCOMPLETE) -->
+  <div class="right-column">
+   <div class="incomplete-section-title">🍛 PARTIALLY DELIVERED</div>
+    <div class="scroll-box">
+      <div id="incompleteList" class="progress-list"></div>
+    </div>
+  </div>
+
+  <!-- IN PROGRESS (now far right) -->
+  <div class="right-column">
+    <div class="progress-section-title">🍲 IN PROGRESS</div>
+    <div class="scroll-box">
+      <div id="progressList" class="progress-list"></div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<div id="bottomTicker">
+  <div id="tickerContent"></div>
+</div>
+
+<script src="js/tv-display.js"></script>
+
+</body>
+</html>

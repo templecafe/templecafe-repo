@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Canteen – Daily Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/daily-menu.css">
+</head>
+
+<body>
+
+<script src="js/auth-guard.js"></script>
+
+<!-- TOP BAR -->
+<header class="app-header">
+  <div class="app-header-left">
+    <div class="app-logo-circle">🛕</div>
+    <div class="app-title-block">
+      <div class="app-title">Today's Menu</div>
+      <div class="app-subtitle">Live offerings for display screens</div>
+    </div>
+  </div>
+
+  <div class="app-header-right">
+    <button class="top-action-btn" onclick="openPresetPopup()">Load Preset</button>
+    <button class="top-action-btn" onclick="loadYesterdayMenu()">Load Yesterday</button>
+    <button class="top-action-btn primary" onclick="saveTodayMenu()">💾 Save Menu</button>
+  </div>
+</header>
+
+<!-- SEARCH + FILTER + STATS -->
+<div class="toolbar">
+  <input id="searchInput" class="search-box" placeholder="Search items...">
+
+  <select id="filterCategory" class="filter-dropdown"></select>
+
+  <div class="stats">
+    <span id="statTotal">Total: 0</span>
+    <span id="statSelected">Selected: 0</span>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div id="categoriesContainer"></div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="preview-header">Selected Items</div>
+    <div id="previewList" class="preview-list"></div>
+  </div>
+
+</div>
+
+<!-- PRESET POPUP -->
+<div id="presetPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Select Preset</h2>
+    <div id="presetList"></div>
+    <button class="cancel-btn" onclick="closePresetPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- FLOATING BACK BUTTON -->
+<button class="back-btn" onclick="history.back()">⟵ Back</button>
+
+<!-- FOOTER -->
+<div class="footer">
+  The Hindu Temple of St. Louis • Menu
+</div>
+
+<script src="js/daily-menu.js"></script>
+</body>
+</html>

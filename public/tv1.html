@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Menu Display</title>
+  <link rel="stylesheet" href="css/tv1.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+<style>
+html {
+  filter: contrast(1.1) saturate(1.15) brightness(0.95);
+}
+</style>
+
+
+</head>
+
+<body>
+
+  <!-- FULLSCREEN BUTTON -->
+
+  <div id="container">
+
+    <!-- LEFT COLUMN -->
+    <div id="leftColumn">
+
+      <!-- HEADER -->
+      <header id="topHeader">
+        <div id="headerLeftRow">
+
+          <div id="headerLeft">
+            <img src="images/logo.png" id="templeLogo">
+          </div>
+
+          <div id="headerCenter">
+            <h1 id="headerTitle">Today's Menu</h1>
+          </div>
+
+          <div id="headerRight">
+            <div id="weatherBox">
+              <img id="weatherIcon" src="" alt="Weather">
+              <div>
+                <div id="weatherTemp"></div>
+                <div id="weatherCity"></div>
+              </div>
+            </div>
+
+            <div id="analogClock">
+              <div class="hand hour"></div>
+              <div class="hand minute"></div>
+              <div class="hand second"></div>
+              <div class="center-dot"></div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- STATIC MENU -->
+      <div id="leftMenu">
+        <ul id="staticMenuList" class="two-columns"></ul>
+      </div>
+
+      <!-- TICKER -->
+      <div id="bottomTicker">
+        <div id="tickerText">Loading announcements...</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div id="rightColumn">
+
+      <!-- QR SECTION (TOP) -->
+      <div id="qrSection">
+
+        <div class="qrBox">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestcanteenqueue.web.app%2Forder-status.html">
+          <div class="qrLabel">Order Status</div>
+        </div>
+
+        <div class="qrBox">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestcanteenqueue.web.app%2Fmobile-menu.html">
+          <div class="qrLabel">Menu</div>
+        </div>
+
+        <div class="qrBox">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Ftestcanteenqueue.web.app%2Fmobile-menu.html">
+          <div class="qrLabel">Order Online</div>
+        </div>
+
+      </div>
+
+      <!-- SCROLLING MENU (BOTTOM) -->
+      <div id="scrollWrapper">
+        <div id="scrollSafeWrapper">
+          <div id="scrollContent"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="js/tv1.js"></script>
+</body>
+</html>

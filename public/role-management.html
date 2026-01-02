@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Role Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase Core -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <!-- Firebase Config -->
+  <script src="config.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/role-management.css">
+</head>
+
+<body>
+
+  <h1>User & Role Management</h1>
+
+  <!-- Audit Logs Button -->
+  <button id="auditLogsBtn" class="audit-btn" style="display:none;">
+    📜 View Audit Logs
+  </button>
+
+  <!-- Pending Requests -->
+  <section class="admin-section">
+    <h2>Pending Role Requests</h2>
+    <div id="pendingRequests" class="request-list">Loading...</div>
+  </section>
+
+  <!-- All Users -->
+  <section class="admin-section">
+    <h2>All Users</h2>
+    <div id="userList" class="user-list">Loading users...</div>
+  </section>
+
+  <!-- Page Logic -->
+  <script src="js/role-management.js"></script>
+
+</body>
+</html>

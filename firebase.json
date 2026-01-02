@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "stlcafe",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

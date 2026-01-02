@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cafeteria Staff Portal – The Hindu Temple (STL)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- Config -->
+  <script src="config.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+  <!-- Offline Banner -->
+  <div id="offlineBanner">
+    Offline Mode Active — changes will sync when internet returns
+  </div>
+
+  <!-- Logo -->
+  <div class="header">
+    <img id="logo" src="images/logo.png" alt="Temple Logo">
+  </div>
+
+  <div class="title">
+    <h2>Cafeteria – The Hindu Temple (STL)</h2>
+  </div>
+
+  <!-- WELCOME SCREEN -->
+  <div id="welcomeScreen">
+    <div class="welcome-card">
+      <img src="images/logo.png" class="welcome-logo" alt="Temple Logo">
+
+      <h1 class="welcome-title">Cafeteria Staff Portal</h1>
+      <p class="welcome-subtitle">Serving with devotion and teamwork</p>
+
+      <div class="welcome-buttons">
+        <button class="welcome-btn primary" onclick="location.href='login.html'">Login</button>
+        <button class="welcome-btn secondary" onclick="location.href='login.html'">Signup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTECTED CONTENT -->
+  <div id="protectedTiles" class="hidden">
+
+    <!-- Welcome Box -->
+    <div id="welcomeBox" class="welcome-box">
+      <div class="welcome-line">
+        Welcome, <span id="welcomeName"></span>
+      </div>
+      <div id="roleBadge" class="role-badge"></div>
+      <div id="lastLogin"></div>
+      <div id="pendingBadge" class="pending hidden">Pending Approval</div>
+    </div>
+
+    <!-- SECTION: OPERATIONS -->
+    <h3 class="section-header">──────────  OPERATIONS  ──────────</h3>
+
+    <div class="tiles">
+
+      <div id="tileDelivery" class="tile tile-green">
+        <span class="icon">🚚</span>
+        Desk Screens
+      </div>
+
+      <div id="tileMenuHub" class="tile tile-gold">
+        <span class="icon">📚</span>
+        Menu Hub
+      </div>
+
+      <div id="tileDisplay" class="tile tile-bronze">
+        <span class="icon">📺</span>
+        Token Screen
+      </div>
+
+      <div id="tileOrderStatus" class="tile tile-green hidden">
+        <span class="icon">📊</span>
+        Check Order Status
+      </div>
+
+      <div id="tileMobileMenu" class="tile tile-gold hidden">
+        <span class="icon">📱</span>
+        Mobile Menu
+      </div>
+
+      <div id="tileTVScreens" class="tile tile-bronze hidden">
+        <span class="icon">🖥️</span>
+        TV Display Screens
+      </div>
+
+    </div>
+
+    <!-- SECTION: ADMIN -->
+    <h3 class="section-header admin-section">──────────────  ADMIN  ──────────────</h3>
+
+    <div class="tiles">
+
+      <div id="tileUserRoles" class="tile tile-gold hidden">
+        <span class="icon">👥</span>
+        User & Roles
+      </div>
+
+      <div id="resetStaffPasswordLink" class="tile tile-gold hidden">
+        <span class="icon">🔑</span>
+        Reset Staff Password
+      </div>
+
+    </div>
+
+    <!-- SECTION: ACCOUNT -->
+    <h3 class="section-header">──────────────  ACCOUNT  ──────────────</h3>
+
+    <div class="tiles">
+
+      <div id="changePasswordLink" class="tile tile-bronze hidden">
+        <span class="icon">🔒</span>
+        Change Password
+      </div>
+
+      <div id="logoutLink" class="tile tile-green hidden">
+        <span class="icon">🚪</span>
+        Logout
+      </div>
+
+      <button id="requestRoleBtn" class="tile tile-gold hidden">
+        <span class="icon">🙏</span>
+        Request Role
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- DELIVERY POPUP (correct one) -->
+  <div id="deliveryPopup" class="popup-overlay hidden">
+    <div class="popup-box delivery-box">
+      <h2>Delivery Orders</h2>
+
+      <div id="deliveryOrdersList" class="delivery-list"></div>
+
+      <button class="popup-btn" id="closeDeliveryPopup">Close</button>
+    </div>
+  </div>
+
+  <!-- TV DISPLAY POPUP -->
+  <div id="tvPopup" class="overlay hidden">
+    <div class="popup">
+      <h2>Select TV Display</h2>
+
+      <button class="popup-btn gold-btn" onclick="openPage('tv1.html')">TV1 Display</button>
+      <button class="popup-btn green-btn" onclick="openPage('tv-display.html')">TV2 Display</button>
+      <button class="popup-btn bronze-btn" onclick="openPage('menu-display-grid.html')">TV3 Display</button>
+      <button class="popup-btn red-btn" onclick="closeTVPopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="js/index.js"></script>
+</body>
+</html>

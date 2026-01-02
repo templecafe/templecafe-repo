@@ -1,0 +1,169 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f7e7c1, #f3d9a4);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  background: linear-gradient(135deg, #f7e7c1, #f3d9a4);
+  color: #333;
+  font-size: 2rem;
+}
+
+/* KIOSK INPUT */
+.kiosk-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.kiosk-input {
+  padding: 12px;
+  font-size: 1.2rem;
+  width: 160px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  text-align: center;
+}
+
+.kiosk-button {
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #27ae60;
+  color: white;
+  cursor: pointer;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: transparent;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.filter-btn {
+  flex: 0 0 auto;
+  min-width: 110px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 50px;
+  border: 2px solid #d4af37;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.25s ease;
+}
+
+.filter-btn:hover {
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+  transform: translateY(-2px);
+}
+
+.filter-active {
+  outline: 3px solid #d4af37;
+}
+
+.filter-waiting { background: #e67e22; }
+.filter-prep { background: #8e44ad; }
+.filter-ready { background: #27ae60; }
+.filter-delivered { background: #2980b9; }
+.filter-all { background: #7f8c8d; }
+.clear-btn { background: #c0392b; }
+
+/* TILE GRID */
+.tile-container {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.tile {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  border-left: 10px solid transparent;
+}
+
+.status-waiting { border-left-color: #e67e22; }
+.status-inprep { border-left-color: #8e44ad; }
+.status-ready { border-left-color: #27ae60; }
+.status-delivered { border-left-color: #2980b9; }
+
+.num-waiting { color: #e67e22; }
+.num-in_preparation { color: #8e44ad; }
+.num-ready { color: #27ae60; }
+.num-delivered { color: #2980b9; }
+
+.order-number {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.status-label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* EDIT / DELETE BUTTONS */
+.edit-btn,
+.delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.edit-btn { background: #3498db; color: white; }
+.delete-btn { background: #e74c3c; color: white; }
+
+/* EDIT MODE */
+.edit-input {
+  font-size: 1.4rem;
+  padding: 6px;
+  width: 100px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.save-btn {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 6px;
+}
+
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+}

@@ -1,0 +1,501 @@
+/* ============================================================
+   Base layout
+============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #fdf5e6 0%, #f7efe2 40%, #f4e7d5 100%);
+  color: #2b1a0d;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Fullscreen button
+============================================================ */
+
+#fullscreenBtn {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Header bar
+============================================================ */
+
+.header-bar {
+  flex: 0 0 70px;
+  display: flex;
+  align-items: center;
+  padding: 10px 28px;
+  background: linear-gradient(to right, #7b241c, #b03a2e);
+  color: #fdf5e6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.header-left,
+.header-center,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  flex: 0 0 auto;
+}
+
+.header-center {
+  flex: 1 1 auto;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.header-right {
+  flex: 0 0 80px;
+  justify-content: flex-end;
+}
+
+.header-logo {
+  height: 48px;
+  width: auto;
+}
+
+/* ============================================================
+   Main screen layout
+============================================================ */
+
+.screen-layout {
+  flex: 1 1 auto;
+  display: flex;
+  padding: 6px 10px;                 /* tightened for TV fit */
+  gap: 16px;
+  height: calc(100% - 70px);         /* header is 70px */
+  overflow: hidden;
+}
+
+/* LEFT: READY */
+.left-side {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  background: transparent !important;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border: 3px solid #e8c77a;         /* gold border */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* RIGHT: IN PROGRESS + INCOMPLETE */
+.right-side {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(180deg, #f7e7c1 0%, #f3d9a6 100%); /* sandalwood */
+  border-radius: 16px;
+  padding: 8px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Each right column box */
+.right-column {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent !important;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border: 3px solid #e8c77a;         /* gold border */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Section titles
+============================================================ */
+
+.ready-section-title,
+.progress-section-title,
+.incomplete-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ready-section-title {
+  color: #1e8449;
+}
+
+.progress-section-title {
+  color: #1f618d;
+}
+
+.incomplete-section-title {
+  color: #b03a2e;
+}
+
+/* Center READY FOR PICKUP text within its section */
+.ready-section-title {
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* ============================================================
+   Scroll boxes (shared)
+============================================================ */
+
+.scroll-box {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background: transparent !important;
+  border-radius: 14px;
+  border: 2px solid #e8c77a;         /* gold frame for inner area */
+}
+
+.scroll-box.auto-height {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.scroll-box.fixed-height {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Remove bottom fade overlay that added extra height */
+.scroll-box.fixed-height::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;                         /* disabled */
+  background: transparent;
+  pointer-events: none;
+}
+
+/* ============================================================
+   READY grid
+============================================================ */
+
+.ready-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(12vw, 160px), 1fr));
+  gap: 12px;
+  padding-right: 4px;
+}
+
+/* ============================================================
+   Font scaling variables
+============================================================ */
+
+:root {
+  --ready-font: 4vh;
+  --progress-font: 3vh;
+  --partial-font: 3.6vh;
+}
+
+/* ============================================================
+   READY tiles — Emerald Green + Halo
+============================================================ */
+
+.ready-tile {
+  background: #00b359; /* Emerald */
+  color: #ffffff;
+  border: 3px solid #006b36;
+  border-radius: 16px;
+  font-size: var(--ready-font);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 0 16px rgba(0, 179, 89, 0.45);
+  padding: calc(1vh + 4px) calc(1vw + 4px);
+}
+
+/* 15+ minutes — gold halo */
+.ready-wait-15 {
+  background: #00b359;
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(255, 215, 0, 0.55);
+}
+
+/* 30+ minutes — red halo */
+.ready-wait-30 {
+  background: #00b359;
+  color: #ffffff;
+  box-shadow: 0 0 26px rgba(255, 0, 0, 0.55);
+}
+
+/* READY tile pulse for overdue orders */
+.ready-pulse-30 {
+  animation: readyPulse30 1.8s ease-in-out infinite;
+}
+
+@keyframes readyPulse30 {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Strong red glow for 30+ min */
+.ready-glow-30 {
+  box-shadow: 0 0 22px rgba(255, 0, 0, 0.55);
+}
+
+@keyframes readyFlash {
+  0% { background: #ffffff; }
+  50% { background: #2ecc71; }
+  100% { background: #2ecc71; }
+}
+
+.ready-flash {
+  animation: readyFlash 0.6s ease-out;
+}
+
+@keyframes readyBurst {
+  0% {
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0.9);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.9);
+    transform: scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+    transform: scale(1);
+  }
+}
+
+.ready-burst {
+  animation: readyBurst 0.9s ease-out;
+}
+
+/* ============================================================
+   IN PROGRESS & INCOMPLETE lists
+============================================================ */
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.progress-item {
+  background: #fff7e6;               /* soft saffron/cream */
+  border: 2px solid #f0d9a6;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: var(--progress-font);
+  color: #a65e00;                    /* deep saffron text */
+  padding: calc(1vh + 4px) calc(1vw + 4px);
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.progress-item .icon {
+  flex: 0 0 40px;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Time-based background for legacy classes (if still used) */
+.tile-15 {
+  background: #fff7d6;
+}
+
+.tile-30 {
+  background: #f9d6d5;
+}
+
+/* ============================================================
+   Bottom ticker
+============================================================ */
+
+#bottomTicker {
+  flex: 0 0 42px;
+  background: #7b241c;
+  color: #fdf5e6;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+#tickerContent {
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ============================================================
+   Responsive tweaks
+============================================================ */
+
+@media (max-width: 1200px) {
+  .ready-tile {
+    font-size: 34px;
+  }
+  .progress-item {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .screen-layout {
+    flex-direction: column;
+  }
+  .left-side {
+    flex-basis: auto;
+  }
+}
+
+/* ============================================================
+   IN PROGRESS + INCOMPLETE side-by-side
+============================================================ */
+
+.right-side.two-columns {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.right-side.two-columns .right-column {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PARTIALLY READY tile style */
+
+.progress-item.partial-ready {
+  background: #fff3e0;               /* soft cream-orange */
+  color: #e67e22;                    /* bold orange text */
+  border: 2px solid #f0c29e;
+}
+
+.partial-ready-tile {
+  background: #fff3e0;
+  color: #d35400;
+  border: 2px solid #f0c29e;
+  border-radius: 14px;
+
+  /* MATCH READY TILE HEIGHT BUT REDUCED */
+  min-height: 80px;
+
+  /* HORIZONTAL LAYOUT */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px; /* spacing between icon and number */
+
+  font-weight: 700;
+  padding: calc(1vh + 4px) calc(1vw + 4px);
+}
+
+/* Icon styling */
+.partial-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+/* Number styling (same as READY tile) */
+.partial-number {
+  font-size: var(--partial-font);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Soft orange glow */
+.partial-glow {
+  box-shadow: 0 0 14px rgba(230, 126, 34, 0.55);
+}
+
+/* Pulse animation */
+@keyframes partialPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.partial-pulse {
+  animation: partialPulse 1.8s ease-in-out infinite;
+}
+
+/* 15+ minutes */
+.partial-wait-15 {
+  box-shadow: 0 0 18px rgba(255, 165, 0, 0.55); /* gold/orange glow */
+}
+
+/* 30+ minutes */
+.partial-wait-30 {
+  box-shadow: 0 0 22px rgba(255, 0, 0, 0.55);   /* red glow */
+}
+
+.progress-list .progress-item,
+.partial-ready-tile {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   Remove white from list containers
+============================================================ */
+
+#readyGrid,
+#progressList,
+#incompleteList,
+.ready-grid,
+.progress-list {
+  background: transparent !important;
+}

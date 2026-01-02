@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCIWmRFK50-sM0iMD30TwdZ-WGTR-v2EHg",
+  authDomain: "testcanteenqueue.firebaseapp.com",
+  databaseURL: "https://testcanteenqueue-default-rtdb.firebaseio.com",
+  projectId: "testcanteenqueue",
+  storageBucket: "testcanteenqueue.firebasestorage.app",
+  messagingSenderId: "823774541550",
+  appId: "1:823774541550:web:25600c08d5380da40da5ff"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+db.ref("test").set({ hello: "world" })
+  .then(() => alert("Firebase works!"))
+  .catch(err => alert("Error: " + err));
+</script>
+</body>
+</html>

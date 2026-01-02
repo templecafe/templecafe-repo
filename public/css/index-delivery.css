@@ -1,0 +1,258 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f7e7c1, #f3d9a4);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  background: linear-gradient(135deg, #f7e7c1, #f3d9a4);
+  color: #333;
+  font-size: 2rem;
+}
+
+/* ⭐ FILTER BAR — centered correctly */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.filter-btn {
+  flex: 0 0 auto;
+  min-width: 110px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 50px;
+  border: 2px solid #d4af37;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.25s ease;
+}
+
+.filter-btn:hover {
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+  transform: translateY(-2px);
+}
+
+.filter-active {
+  outline: 3px solid #d4af37;
+}
+
+.filter-waiting { background: #e67e22; }
+.filter-prep { background: #8e44ad; }
+.filter-ready { background: #27ae60; }
+.filter-delivered { background: #2980b9; }
+.filter-all { background: #7f8c8d; }
+
+/* GRID */
+.delivery-container {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* ORDER TILE */
+.order-tile {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-left: 10px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.order-number {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.order-waiting { color: #e67e22; font-weight: bold; }
+.order-inprep { color: #8e44ad; font-weight: bold; }
+.order-ready { color: #27ae60; font-weight: bold; }
+.order-delivered { color: #2980b9; font-weight: bold; }
+
+.order-comment {
+  background: #fff3cd;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.order-priority {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.order-time {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.priority-high { border-left-color: #e74c3c; }
+.priority-medium { border-left-color: #e67e22; }
+.priority-low { border-left-color: #f1c40f; }
+.priority-prep { border-left-color: #8e44ad; }
+
+/* ⭐ POPUP — hidden by default */
+/* POPUP */
+#statusPopup {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+}
+
+#statusPopupBox {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 85vh;          /* ✅ resizes to screen height */
+  overflow-y: auto;          /* ✅ scrolls if content too tall */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.popup-btn {
+  width:100%;
+  padding:15px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:10px;
+  font-size:1.3rem;
+  cursor:pointer;
+  color:white;
+}
+
+.btn-delivered { background:#27ae60; }
+.btn-waiting { background:#e67e22; }
+.btn-cancel { background:#e74c3c; }
+
+#waitingInput {
+  display:none;
+  margin-top:20px;
+  text-align:left;
+}
+
+.reason-option {
+  display:flex;
+  align-items:center;
+  margin-bottom:8px;
+  font-size:1.1rem;
+}
+
+#otherReason {
+  display:none;
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:1.1rem;
+}
+
+.priority-row {
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.priority-btn {
+  flex:1;
+  margin:5px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  font-size:1.1rem;
+  cursor:pointer;
+  color:white;
+}
+
+.p-high { background:#e74c3c; }
+.p-medium { background:#e67e22; }
+.p-low { background:#f1c40f; color:black; }
+
+.priority-selected {
+  outline:3px solid black;
+}
+
+.submit-btn {
+  background:#3498db;         /* ✅ blue submit button restored */
+  color:white;
+  padding:12px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  font-size:1.3rem;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+#waitingInput {
+  display: none;
+  margin-top: 20px;
+  text-align: left;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* STATUS ICON */
+.status-icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+/* TILE HEADER */
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* TILE BACKGROUND COLORS */
+.tile-waiting {
+  background: #fce5cd !important;   /* soft orange */
+}
+
+.tile-prep {
+  background: #e6d5f7 !important;   /* soft purple */
+}
+
+.tile-ready {
+  background: #d4f4dd !important;   /* soft green */
+}
+
+.tile-delivered {
+  background: #d6eaf8 !important;   /* soft blue */
+}

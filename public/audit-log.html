@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audit Logs</title>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <!-- Firebase Config -->
+  <script src="config.js"></script>
+
+  <!-- Page Styles -->
+  <link rel="stylesheet" href="css/audit-log.css">
+</head>
+
+<body>
+
+<h2>Audit Logs</h2>
+
+<!-- FILTERS -->
+<div class="filters">
+  <select id="filterAction">
+    <option value="">All Actions</option>
+    <option value="login">Login</option>
+    <option value="google_login">Google Login</option>
+    <option value="signup">Signup</option>
+    <option value="role_change">Role Change</option>
+    <option value="lock_user">Lock User</option>
+    <option value="unlock_user">Unlock User</option>
+    <option value="delete_user">Delete User</option>
+  </select>
+
+  <input type="text" id="filterActor" placeholder="Actor Email">
+  <input type="text" id="filterTarget" placeholder="Target Email">
+  <input type="text" id="filterSearch" placeholder="Search details">
+
+  <label>From:</label>
+  <input type="date" id="filterFrom">
+
+  <label>To:</label>
+  <input type="date" id="filterTo">
+
+  <button id="applyFiltersBtn">Apply</button>
+  <button id="clearFiltersBtn" class="clear-btn">Clear</button>
+</div>
+
+<div id="logList">Loading logs...</div>
+
+<!-- Page Logic -->
+<script src="js/audit-log.js"></script>
+
+</body>
+</html>

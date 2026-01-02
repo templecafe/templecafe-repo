@@ -1,0 +1,62 @@
+body {
+  font-family: Segoe UI;
+  background: #f3efe2;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.filters {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.filters input,
+.filters select {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.filters button {
+  padding: 8px 14px;
+  background: #1565c0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.filters button:hover {
+  background: #0d47a1;
+}
+
+.clear-btn {
+  background: #b71c1c !important;
+}
+
+.clear-btn:hover {
+  background: #7f0000 !important;
+}
+
+.log-card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border-left: 5px solid #1565c0;
+}
+
+.timestamp {
+  color: #777;
+  font-size: 13px;
+  margin-top: 5px;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Canteen – Delivery Screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/index-delivery.css">
+</head>
+
+<body>
+
+<script src="js/auth-guard.js"></script>
+
+<h1>Delivery – Orders Overview</h1>
+
+<div class="filter-bar">
+  <button class="filter-btn filter-ready" data-filter="ready" id="filterReady">🔥 Ready</button>
+  <button class="filter-btn filter-waiting" data-filter="waiting" id="filterWaiting">⏳ Pending</button>
+  <button class="filter-btn filter-prep" data-filter="in_preparation" id="in_preparation">🧑‍🍳 Prep</button>
+  <button class="filter-btn filter-delivered" data-filter="delivered" id="filterDelivered">📦 Delivered</button>
+  <button class="filter-btn filter-all filter-active" data-filter="all" id="filterAll">⭐ All</button>
+</div>
+
+<div id="deliveryContainer" class="delivery-container"></div>
+
+<!-- POPUP -->
+<div id="statusPopup">
+  <div id="statusPopupBox">
+    <h2 id="popupOrderTitle">Update Order</h2>
+
+    <button class="popup-btn btn-delivered" id="btnDelivered">Mark as DELIVERED</button>
+    <button class="popup-btn btn-waiting" id="btnWaiting">Waiting</button>
+
+    <div id="waitingInput">
+      <h3>Select Reason</h3>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Item not ready" data-priority="high">
+        Item not ready
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Missing chutney" data-priority="medium">
+        Missing chutney
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Missing sambar" data-priority="medium">
+        Missing sambar
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Customer stepped away" data-priority="low">
+        Customer stepped away
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Payment issue" data-priority="high">
+        Payment issue
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Repackaging needed" data-priority="medium">
+        Repackaging needed
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Allergy clarification needed" data-priority="high">
+        Allergy clarification needed
+      </label>
+
+      <label class="reason-option">
+        <input type="radio" name="waitReason" value="Other" id="radioOther" data-priority="medium">
+        Other
+      </label>
+
+      <textarea id="otherReason" placeholder="Enter reason"></textarea>
+
+      <h3>Priority</h3>
+      <div class="priority-row">
+        <button id="priorityHigh" class="priority-btn p-high">High</button>
+        <button id="priorityMedium" class="priority-btn p-medium">Medium</button>
+        <button id="priorityLow" class="priority-btn p-low">Low</button>
+      </div>
+
+      <button class="submit-btn" id="btnSubmitWaiting">Submit</button>
+    </div>
+
+    <button class="popup-btn btn-cancel" id="btnCancelPopup">Cancel</button>
+  </div>
+</div>
+
+<script src="js/index-delivery.js"></script>
+
+</body>
+</html>

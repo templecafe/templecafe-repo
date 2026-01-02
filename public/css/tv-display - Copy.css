@@ -1,0 +1,331 @@
+/* ============================================================
+   Base layout
+============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #fdf5e6 0%, #f7efe2 40%, #f4e7d5 100%);
+  color: #2b1a0d;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Fullscreen button
+============================================================ */
+
+#fullscreenBtn {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Header bar
+============================================================ */
+
+.header-bar {
+  flex: 0 0 70px;
+  display: flex;
+  align-items: center;
+  padding: 10px 28px;
+  background: linear-gradient(to right, #7b241c, #b03a2e);
+  color: #fdf5e6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.header-left,
+.header-center,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  flex: 0 0 auto;
+}
+
+.header-center {
+  flex: 1 1 auto;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.header-right {
+  flex: 0 0 80px;
+  justify-content: flex-end;
+}
+
+.header-logo {
+  height: 48px;
+  width: auto;
+}
+
+/* ============================================================
+   Main screen layout
+============================================================ */
+
+.screen-layout {
+  flex: 1 1 auto;
+  display: flex;
+  padding: 14px 22px 10px 22px;
+  gap: 16px;
+}
+
+/* LEFT: READY */
+.left-side {
+  flex: 0 0 48%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.7);
+  border-radius: 16px;
+  padding: 14px 16px 10px 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* RIGHT: IN PROGRESS + INCOMPLETE */
+.right-side {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Each right column box */
+.right-column {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.7);
+  border-radius: 16px;
+  padding: 10px 14px 10px 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* ============================================================
+   Section titles
+============================================================ */
+
+.ready-section-title,
+.progress-section-title,
+.incomplete-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ready-section-title {
+  color: #1e8449;
+}
+
+.progress-section-title {
+  color: #1f618d;
+}
+
+.incomplete-section-title {
+  color: #b03a2e;
+}
+
+/* ============================================================
+   Scroll boxes (shared)
+============================================================ */
+
+.scroll-box {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-box.auto-height {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.scroll-box.fixed-height {
+  height: 100%;
+  overflow: hidden;
+}
+
+.scroll-box.fixed-height::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(247,239,226,0.95) 80%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   READY grid
+============================================================ */
+
+.ready-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding-right: 4px;
+}
+
+/* ============================================================
+   READY tiles — UPDATED (Emerald Green + Halo)
+============================================================ */
+
+.ready-tile {
+  background: #00b359; /* Emerald */
+  color: #ffffff;
+  border: 3px solid #006b36;
+  border-radius: 16px;
+  padding: 18px 10px;
+  font-size: 44px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 0 16px rgba(0, 179, 89, 0.45);
+}
+
+/* 15+ minutes — gold halo */
+.ready-wait-15 {
+  background: #00b359;
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(255, 215, 0, 0.55);
+}
+
+/* 30+ minutes — red halo */
+.ready-wait-30 {
+  background: #00b359;
+  color: #ffffff;
+  box-shadow: 0 0 26px rgba(255, 0, 0, 0.55);
+}
+
+/* ============================================================
+   IN PROGRESS & INCOMPLETE lists
+============================================================ */
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.progress-item {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #273746;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.progress-item .icon {
+  flex: 0 0 40px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-15 {
+  background: #fff7d6;
+}
+
+.tile-30 {
+  background: #f9d6d5;
+}
+
+/* ============================================================
+   Bottom ticker
+============================================================ */
+
+#bottomTicker {
+  flex: 0 0 42px;
+  background: #7b241c;
+  color: #fdf5e6;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+#tickerContent {
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ============================================================
+   Responsive tweaks
+============================================================ */
+
+@media (max-width: 1200px) {
+  .ready-tile {
+    font-size: 34px;
+  }
+  .progress-item {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .screen-layout {
+    flex-direction: column;
+  }
+  .left-side {
+    flex-basis: auto;
+  }
+}
+
+/* ============================================================
+   IN PROGRESS + INCOMPLETE side-by-side
+============================================================ */
+
+.right-side.two-columns {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.right-side.two-columns .right-column {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+}

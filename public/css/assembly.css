@@ -1,0 +1,441 @@
+/* ----------------------------------------------------
+   GLOBAL PAGE LAYOUT
+---------------------------------------------------- */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #faf7f2;
+  color: #3a2e1f;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ----------------------------------------------------
+   HEADER
+---------------------------------------------------- */
+header {
+  background: linear-gradient(to right, #b30000, #ff6600);
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+  z-index: 5;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.header-title span {
+  font-size: 14px;
+  color: #ffe6d5;
+}
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.center-logo {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  pointer-events: auto;
+}
+
+.header-right {
+  text-align: right;
+}
+
+.status-pill {
+  background: #c46a24;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+#clock {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #ffe6d5;
+}
+
+/* ----------------------------------------------------
+   ADD ORDER SECTION
+---------------------------------------------------- */
+.search-section {
+  margin-top: 20px;
+}
+
+.search-label {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+#orderNumberInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #c8b79a;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+#addOrderBtn {
+  padding: 10px 18px;
+  background: #3d8b3d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search-message {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #a33;
+}
+
+/* ----------------------------------------------------
+   SUMMARY BAR
+---------------------------------------------------- */
+.summary-bar {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.summary-pill {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.summary-pill.waiting {
+  background: #6b5a43;
+}
+
+.summary-pill.ready {
+  background: #3d8b3d;
+}
+
+.summary-pill.incomplete {
+  background: #c9302c;
+}
+
+.summary-pill .count {
+  display: block;
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+/* ----------------------------------------------------
+   ORDERS GRID
+---------------------------------------------------- */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.order-card {
+  background: white;
+  border: 2px solid #e6d9c3;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+}
+
+.order-card:hover {
+  transform: scale(1.03);
+}
+
+.order-status-tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.order-status-waiting {
+  background: #6b5a43;
+  color: white;
+}
+
+.order-status-ready {
+  background: #3d8b3d;
+  color: white;
+}
+
+.order-status-incomplete {
+  background: #c9302c;
+  color: white;
+}
+
+.order-number-label {
+  font-size: 12px;
+  color: #6b5a43;
+}
+
+.order-number-value {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* ----------------------------------------------------
+   TIME SINCE ORDER
+---------------------------------------------------- */
+.order-wait-time {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5b4225;
+}
+
+/* ----------------------------------------------------
+   HIGHLIGHT COLORS
+---------------------------------------------------- */
+.order-card.highlight-warning {
+  border-color: #ff9800;
+  box-shadow: 0 0 10px rgba(255,152,0,0.6);
+}
+
+.order-card.highlight-danger {
+  border-color: #e53935;
+  box-shadow: 0 0 12px rgba(229,57,53,0.7);
+}
+
+/* ----------------------------------------------------
+   EMPTY STATE
+---------------------------------------------------- */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #6b5a43;
+}
+
+/* ----------------------------------------------------
+   DELIVERED SECTION (A2-SMOOTH)
+---------------------------------------------------- */
+.delivered-toggle-btn {
+  margin-top: 20px;
+  padding: 12px 18px;
+  background: #1e73ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delivered-section {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease;
+  margin-top: 10px;
+}
+
+.delivered-section.show {
+  max-height: 800px;
+  opacity: 1;
+}
+
+/* ----------------------------------------------------
+   MODAL
+---------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-backdrop.show {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  width: 380px;
+  border-radius: 10px;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+  z-index: 10000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.modal-status {
+  font-size: 14px;
+  color: #6b5a43;
+  margin: 6px 0 10px 0;
+  font-weight: 600;
+}
+
+.modal-meta {
+  font-size: 13px;
+  color: #6b5a43;
+  margin-bottom: 10px;
+}
+
+/* ----------------------------------------------------
+   STATUS BUTTONS
+---------------------------------------------------- */
+.status-btn {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ready-btn {
+  background: #3d8b3d;
+  color: white;
+}
+
+.incomplete-btn {
+  background: #c9302c;
+  color: white;
+}
+
+.delivered-btn {
+  background: #1e73ff; /* Professional blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delivered-btn:hover {
+  background: #0f5ad8; /* Slightly darker on hover */
+}
+/* ----------------------------------------------------
+   INCOMPLETE REASON SECTION
+---------------------------------------------------- */
+.reason-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+#otherReasonInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #c8b79a;
+  border-radius: 6px;
+}
+
+.submit-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  background: #c46a24;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.order-status-delivered {
+  background: #1e73ff; /* Blue */
+  color: white;
+}
+
+/* Blinking animation for overdue orders */
+.blink {
+  animation: blinkAnim 1.2s infinite ease-in-out;
+}
+
+@keyframes blinkAnim {
+  0% { opacity: 1; }
+  50% { opacity: 0.45; }
+  100% { opacity: 1; }
+}
+
+.optional-label {
+  font-size: 12px;
+  color: #6b5a43;
+  font-weight: 500;
+  margin-left: 4px;
+}
+.optional-note {
+  font-size: 12px;
+  color: #8a7a63;
+  margin-bottom: 8px;
+}

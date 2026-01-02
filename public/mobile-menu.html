@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Canteen – Today’s Menu Display</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/mobile-menu.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+</head>
+
+<body>
+
+<div id="fullscreenOverlay"></div>
+
+<div id="goldFrame"></div>
+
+<div id="topBanner">
+  <div id="bannerRow1">
+    <img id="bannerLogo" src="images/logo.png" alt="Temple logo">
+    <div id="bannerTitle">Welcome to The Hindu Temple of St Louis</div>
+    <div id="bannerClock"></div>
+  </div>
+  <div id="bannerSubtitle">Today's Menu</div>
+</div>
+
+<div id="scrollWrapper">
+  <div id="scrollContent">
+    <div id="menuGrid" class="menuGridBlock"></div>
+  </div>
+</div>
+
+<button id="scrollTopBtn">↑</button>
+
+<!-- JS -->
+<script src="js/mobile-menu.js"></script>
+
+</body>
+</html>

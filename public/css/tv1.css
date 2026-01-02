@@ -1,0 +1,820 @@
+/* ---------- SCROLL-ONLY SAFE WRAPPER ---------- */
+#scrollSafeWrapper {
+  transform: scale(0.75);
+  transform-origin: top center;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- GLOBAL LAYOUT ---------- */
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff8e1;
+  overflow: hidden;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  height: 100vh;
+}
+
+/* ---------- FULLSCREEN BUTTON ---------- */
+
+#fullscreenBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  font-size: 20px;
+  background: #d4af37;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #4b2e0f;
+  z-index: 9999;
+}
+
+#fullscreenBtn.hidden {
+  display: none;
+}
+
+/* ---------- LEFT COLUMN ---------- */
+
+#leftColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fdf3d0;
+}
+
+/* ---------- HEADER ---------- */
+
+#topHeader {
+  background: #f7e7c1;
+  border-bottom: 4px solid #b8860b;
+  padding: 8px 20px;
+  min-height: 70px;
+}
+
+#headerLeftRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#headerLeft {
+  flex: 0 0 auto;
+}
+
+#templeLogo {
+  height: 45px;
+  width: auto;
+}
+
+#headerCenter {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+#headerTitle {
+  font-size: 32px;
+  font-weight: bold;
+  color: #6b3e26;
+  margin: 0;
+}
+
+#headerRight {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* WEATHER */
+
+#weatherBox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#weatherIcon {
+  width: 40px;
+  height: 40px;
+}
+
+#weatherTemp {
+  font-size: 24px;
+  font-weight: bold;
+  color: #6b3e26;
+}
+
+#weatherCity {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b3e26;
+}
+
+/* CLOCK */
+
+#analogClock {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #b8860b;
+  border-radius: 50%;
+  position: relative;
+  background: #fff8e1;
+}
+
+.hand {
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: #6b3e26;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 50%;
+}
+
+.hand.hour { width: 35%; height: 4px; }
+.hand.minute { width: 45%; }
+.hand.second { width: 48%; height: 2px; background: #d40000; }
+
+.center-dot {
+  width: 8px;
+  height: 8px;
+  background: #6b3e26;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- STATIC MENU ---------- */
+
+#leftMenu {
+  flex: 1;
+  padding: 20px 40px;
+  overflow-y: auto;
+  background: #f8e9c8;
+  /* border removed – frame will be drawn on parent */
+  margin: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+#staticMenuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  column-gap: 40px;
+}
+
+#staticMenuList.two-columns { columns: 2; }
+#staticMenuList.three-columns { columns: 3; }
+
+/* ⭐ Larger category headers */
+.category-header {
+  font-size: 28px;
+  font-weight: bold;
+  color: #8b4513;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 4px;
+}
+
+/* ⭐ Larger left menu items */
+.menu-item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px; /* increased from 20px */
+  padding: 8px 0;
+  color: #4b2e0f;
+  border-bottom: 1px solid #e0c89c;
+}
+
+.item-name { flex: 1; }
+
+.item-price {
+  min-width: 50px;
+  text-align: right;
+  font-weight: bold;
+  color: #6b3e26;
+}
+
+/* ---------- TICKER ---------- */
+
+#bottomTicker {
+  height: 50px;
+  background: #b8860b;
+  color: white;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ⭐ True right-to-left ticker */
+#tickerText {
+  white-space: nowrap;
+  animation: tickerMove 20s linear infinite;
+  font-size: 24px;
+}
+
+@keyframes tickerMove {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ---------- RIGHT COLUMN ---------- */
+
+#rightColumn {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(to bottom, #f7e7c1, #f3d9a4);
+  overflow: hidden;
+}
+
+/* ---------- QR SECTION (TOP) ---------- */
+
+#qrSection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: max(20%, 180px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(255, 248, 225, 1);
+
+  box-shadow:
+    0 3px 6px rgba(212, 175, 55, 0.6),
+    0 1px 0px rgba(255, 255, 255, 0.8) inset,
+    0 4px 0px rgba(212, 175, 55, 0.9) inset;
+}
+
+.qrBox {
+  background: #fff8e1;
+  border: 2px solid #d4af37;
+  padding: 4px;
+  border-radius: 10px;
+  text-align: center;
+  width: 85px;
+}
+
+.qrBox img {
+  width: 70px;
+  height: 70px;
+}
+
+.qrLabel {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #6b3e26;
+}
+
+/* ---------- SCROLL AREA (BOTTOM) ---------- */
+
+#scrollWrapper {
+  position: absolute;
+  top: max(20%, 180px);
+  left: 0;
+  right: 0;
+
+  /* ⭐ Lift scroll area above ticker */
+  bottom: 70px; /* increased from 40px */
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  overflow: hidden;
+  padding: 10px 0;
+
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+
+  box-shadow:
+    inset 0 0 12px rgba(0,0,0,0.25),
+    0 8px 12px rgba(0,0,0,0.15);
+}
+
+#scrollContent {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: scrollUp 90s linear infinite;
+}
+
+/* ---------- SCROLL TILE STYLE ---------- */
+
+/* ⭐ Larger scrolling tiles */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px; /* increased padding */
+  background: #fdf3d0;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+  box-shadow: 0 0 4px rgba(0,0,0,0.10);
+}
+
+.menu-item img {
+  width: 75px; /* increased from 65px */
+  height: 75px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #d4af37;
+}
+
+.menu-item .name {
+  font-size: 24px; /* increased from 20px */
+  font-weight: bold;
+  color: #6b3e26;
+}
+
+.menu-item .translation {
+  font-size: 16px; /* increased from 14px */
+  color: #555;
+}
+
+/* ---------- SCROLL ANIMATION ---------- */
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+/* ---------- RESPONSIVE STACKED LAYOUT BELOW 900PX ---------- */
+
+@media (max-width: 900px) {
+
+  #scrollSafeWrapper {
+    transform: none;
+    width: 100%;
+    height: auto;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
+  #container {
+    display: block;
+    height: auto;
+  }
+
+  #leftColumn,
+  #rightColumn {
+    position: static;
+    height: auto;
+  }
+
+  #leftMenu {
+    max-height: none;
+  }
+
+  #bottomTicker {
+    position: static;
+  }
+
+  #qrSection {
+    position: static;
+    height: auto;
+    margin: 10px auto;
+    justify-content: center;
+  }
+
+  #scrollWrapper {
+    position: static;
+    height: auto;
+    max-height: 50vh;
+    margin: 10px;
+    bottom: 0;
+  }
+
+  #scrollContent {
+    animation-duration: 60s;
+  }
+
+  #rightColumn {
+    margin-top: 10px;
+    padding-bottom: 20px;
+  }
+}
+
+
+/* ============================================================
+   FIXES FOR SCREENLITE TV DISPLAY
+   ============================================================ */
+
+/* --- GLOBAL ZOOM (1.28 scale) --- */
+body {
+  zoom: 1.28;
+  overflow: hidden;
+}
+
+/* --- FIX TICKER ALWAYS VISIBLE --- */
+#bottomTicker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px !important;
+  z-index: 9998;
+}
+
+/* --- LIFT SCROLL AREA ABOVE TICKER --- */
+#scrollWrapper {
+  bottom: 70px !important;
+}
+
+/* --- REMOVE SHRINK FROM SCROLL SAFE WRAPPER --- */
+#scrollSafeWrapper {
+  transform: none !important;
+}
+
+/* ============================================================
+   ENLARGED SCROLL TILES FOR TV READABILITY
+   ============================================================ */
+
+.menu-item {
+  padding: 26px 32px !important;
+  gap: 26px !important;
+  border-radius: 16px !important;
+}
+
+.menu-item img {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 14px !important;
+}
+
+.menu-item .name {
+  font-size: 36px !important;
+  font-weight: 800 !important;
+}
+
+.menu-item .translation {
+  font-size: 22px !important;
+}
+
+/* Increase spacing between tiles */
+#scrollContent {
+  gap: 32px !important;
+}
+
+/* Slow down scroll for larger tiles */
+#scrollContent {
+  animation-duration: 130s !important;
+}
+
+
+/* ============================================================
+   LEFT SECTION BOTTOM BORDER SPACING (fix overlap with ticker)
+   ============================================================ */
+
+#leftMenu {
+  margin-bottom: 110px !important; /* lifted so golden border is visible */
+}
+
+
+
+/* ============================================================
+   QR CODE IMPROVEMENTS (bigger + more spacing)
+   ============================================================ */
+
+#qrSection {
+  gap: 32px !important;      /* more spacing between QR boxes */
+  padding: 22px !important;
+}
+
+.qrBox {
+  width: 150px !important;   /* bigger QR box */
+  padding: 12px !important;
+}
+
+.qrBox img {
+  width: 130px !important;   /* bigger QR image */
+  height: 130px !important;
+}
+
+.qrLabel {
+  font-size: 18px !important;
+}
+
+
+/* ============================================================
+   SCROLL FRAME LIFTED ABOVE TICKER (oval fully visible)
+   ============================================================ */
+
+#scrollWrapper {
+  bottom: 130px !important; /* lifted higher so oval frame is not cut */
+}
+
+
+
+/* ============================================================
+   SHOW ~5 SCROLL TILES AT ONCE (balanced readability)
+   ============================================================ */
+
+.menu-item {
+  padding: 16px 20px !important;
+  gap: 16px !important;
+  border-radius: 14px !important;
+}
+
+.menu-item img {
+  width: 90px !important;
+  height: 90px !important;
+}
+
+.menu-item .name {
+  font-size: 26px !important;
+}
+
+.menu-item .translation {
+  font-size: 17px !important;
+}
+
+/* Reduce vertical spacing so more tiles fit */
+#scrollContent {
+  gap: 18px !important;
+}
+
+
+
+/* ============================================================
+   SCROLL SPEED (faster but still smooth)
+   ============================================================ */
+
+#scrollContent {
+  animation-duration: 75s !important; /* previously 130s → now faster */
+}
+
+
+/* ============================================================
+   FIX LEFT MENU FRAME OVERLAP WITH TICKER
+   ============================================================ */
+
+#leftMenu {
+  margin-bottom: 150px !important; /* lifted more so golden frame never touches ticker */
+}
+
+
+
+/* ============================================================
+   QR CODE FIXES (prevent clipping + bigger + centered)
+   ============================================================ */
+
+#qrSection {
+  gap: 40px !important;        /* more spacing between QR boxes */
+  padding: 20px 10px !important;
+  justify-content: center !important;
+}
+
+.qrBox {
+  width: 160px !important;     /* wider box so text never clips */
+  padding: 12px !important;
+  border-radius: 14px !important;
+}
+
+.qrBox img {
+  width: 120px !important;     /* slightly smaller so it stays inside box */
+  height: 120px !important;
+}
+
+.qrLabel {
+  font-size: 20px !important;  /* readable + fits inside box */
+  white-space: nowrap !important;
+}
+
+
+
+/* ============================================================
+   SCROLL FRAME LIFTED ABOVE TICKER (oval fully visible)
+   ============================================================ */
+
+#scrollWrapper {
+  bottom: 150px !important; /* lifted more so oval frame is fully visible */
+}
+
+
+
+/* ============================================================
+   SHOW 5–6 TILES AT ONCE (reduce tile height)
+   ============================================================ */
+
+.menu-item {
+  padding: 12px 16px !important;
+  gap: 14px !important;
+  border-radius: 12px !important;
+}
+
+.menu-item img {
+  width: 75px !important;
+  height: 75px !important;
+}
+
+.menu-item .name {
+  font-size: 22px !important;
+}
+
+.menu-item .translation {
+  font-size: 15px !important;
+}
+
+/* Reduce vertical spacing so more tiles fit */
+#scrollContent {
+  gap: 14px !important;
+}
+
+
+
+/* ============================================================
+   SCROLL SPEED (faster)
+   ============================================================ */
+
+#scrollContent {
+  animation-duration: 55s !important; /* faster but still readable */
+}
+
+
+
+/* ============================================================
+   3D EFFECT FOR SCROLL SECTION (no golden border)
+   ============================================================ */
+
+#scrollWrapper {
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-radius: 20px !important;
+
+  /* 3D soft inset + outer shadow */
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,0.25),
+    0 6px 14px rgba(0,0,0,0.25),
+    0 0 10px rgba(255,255,255,0.6);
+}
+
+/* ============================================================
+   SCREENLITE SAFE ENHANCEMENTS (non-breaking)
+   ============================================================ */
+
+/* Slight zoom for TV readability */
+body {
+  zoom: 1.15;
+  overflow: hidden;
+}
+
+/* Ensure container respects viewport */
+#container {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+/* Keep left & right in proper columns */
+#leftColumn, #rightColumn {
+  height: 100%;
+}
+
+/* Lift scroll area a bit above ticker */
+#scrollWrapper {
+  bottom: 70px;
+}
+
+/* Tighten QR spacing without blowing layout */
+#qrSection {
+  gap: 12px;
+  padding: 10px 6px;
+}
+
+.qrBox {
+  width: 120px;
+  padding: 6px;
+}
+
+.qrBox img {
+  width: 95px;
+  height: 95px;
+}
+
+.qrLabel {
+  font-size: 16px;
+}
+
+/* Make sure the left menu border stays visible */
+#leftMenu {
+  margin-bottom: 80px;
+}
+
+/* Keep ticker at the bottom of left column only */
+#bottomTicker {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ============================================================
+   HARD RESET — RESTORE ORIGINAL GRID LAYOUT
+   ============================================================ */
+
+body {
+  transform: none !important;
+  zoom: 1 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+#container {
+  display: grid !important;
+  grid-template-columns: 70% 30% !important;
+  height: 100vh !important;
+  width: 100vw !important;
+  position: relative !important;
+}
+
+#leftColumn, #rightColumn {
+  position: relative !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Restore QR section */
+#qrSection {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: max(20%, 180px) !important;
+  display: flex !important;
+}
+
+/* Restore scroll section */
+#scrollWrapper {
+  position: absolute !important;
+  top: max(20%, 180px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 70px !important;
+  display: flex !important;
+}
+
+/* Restore ticker */
+#bottomTicker {
+  position: relative !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 50px !important;
+}
+
+/* Lower the scroll section so it never overlaps QR codes */
+#scrollWrapper {
+  top: calc(max(20%, 180px) + 20px) !important;
+}
+
+/* ============================================================
+   GLASS EFFECT FOR LEFT MENU + QR SECTION (matches scroll area)
+   ============================================================ */
+
+/* Left menu glass effect */
+#leftMenu {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+  border-radius: 20px !important;
+
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,0.25),
+    0 6px 14px rgba(0,0,0,0.25),
+    0 0 10px rgba(255,255,255,0.6) !important;
+}
+
+/* QR section glass effect */
+#qrSection {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+  border-radius: 20px !important;
+
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,0.25),
+    0 6px 14px rgba(0,0,0,0.25),
+    0 0 10px rgba(255,255,255,0.6) !important;
+}

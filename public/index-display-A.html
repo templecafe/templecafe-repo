@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Canteen – Display A</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .theme-default { background: #000; color: #fff; }
+    .theme-dark    { background: #101010; color: #fff; }
+    .theme-blue    { background: #021b3b; color: #fff; }
+
+    .main-layout {
+      display: flex;
+      height: 100vh;
+    }
+
+    .ready-section {
+      flex: 9;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .display-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .display-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .display-tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      background: #39ff14;
+      color: #000;
+      box-shadow: 0 0 20px #39ff14;
+      border: 3px solid rgba(255,255,255,0.2);
+      min-height: 120px;
+      padding: 10px;
+      text-align: center;
+    }
+    .display-number {
+      font-size: clamp(2rem, 8vw, 6rem); /* auto-fit */
+      font-weight: 900;
+      line-height: 1.1;
+      word-break: break-word;
+    }
+
+    .side-section {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .side-title {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .prep-grid, .waiting-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .prep-tile, .waiting-tile {
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .prep-tile { background: #d6e8ff; color: #000; }
+    .waiting-tile { background: #fff8d6; color: #000; }
+    .waiting-number, .prep-number {
+      font-size: clamp(1rem, 3vw, 2rem);
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .top-right-controls {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 9999;
+    }
+    .control-btn {
+      padding: 8px 12px;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    #ticker {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      padding: 12px;
+      font-size: 1.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 9998;
+    }
+    #ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker-scroll 18s linear infinite;
+    }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0%); }
+      to   { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+
+<body class="theme-default">
+  <div class="top-right-controls">
+    <button id="themeToggle" class="control-btn">Theme</button>
+  </div>
+
+  <div class="main-layout">
+    <div class="ready-section">
+      <div class="display-title">Now Serving</div>
+      <div id="displayGrid" class="display-grid"></div>
+    </div>
+
+    <div class="side-section">
+      <div class="side-title">In Preparation</div>
+      <div id="prepGrid" class="prep-grid"></div>
+
+      <div class="side-title">Waiting</div>
+      <div id="waitingGrid" class="waiting-grid"></div>
+    </div>
+  </div>
+
+  <div id="ticker">
+    <span>Welcome to the Temple Canteen • Please collect your order promptly • Thank you for your service</span>
+  </div>
+
+  <audio id="readySound" src="sounds/ready.mp3"></audio>
+
+  <script>
+    firebase.initializeApp(window.firebaseConfig);
+    const db = firebase.database();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const displayGrid = document.getElementById("displayGrid");
+      const waitingGrid = document.getElementById("waitingGrid");
+      const prepGrid = document.getElementById("prepGrid");
+      const readySound = document.getElementById("readySound");
+      const themeToggle = document.getElementById("themeToggle");
+
+      let lastReadyList = [];
+
+      const themes = ["theme-default", "theme-dark", "theme-blue"];
+      let themeIndex = 0;
+      themeToggle.addEventListener("click", () => {
+        themeIndex = (themeIndex + 1) % themes.length;
+        document.body.className = themes[themeIndex];
+      });
+
+      db.ref("orders").on("value", (snap) => {
+        const data = snap.val() || {};
+        const ready = [], waiting = [], prep = [];
+
+        for (const [counter, orders] of Object.entries(data)) {
+          if (!orders) continue;
+          for (const [num, info] of Object.entries(orders)) {
+            const status = (info && info.status) || "";
+            if (status === "ready") ready.push({ num, time: info.readyAt || 0 });
+            if (status === "waiting") waiting.push({ num });
+            if (status === "preparation" || status === "in_preparation") prep.push({ num });
+          }
+        }
+
+        ready.sort((a, b) => b.time - a.time);
+        waiting.sort((a, b) => Number(a.num) - Number(b.num));
+        prep.sort((a, b) => Number(a.num) - Number(b.num));
+
+        const currentReadyNums = ready.map(r => String(r.num));
+        const newOnes = currentReadyNums.filter(n => !lastReadyList.includes(n));
+        if (newOnes.length > 0) {
+          readySound.currentTime = 0;
+          readySound.play().catch(() => {});
+        }
+        lastReadyList = currentReadyNums;
+
+        displayGrid.innerHTML = ready.length
+          ? ready.map(item => `
+              <div class="display-tile">
+                <div class="display-number">${item.num}</div>
+              </div>
+            `).join("")
+          : `<div style="text-align:center;font-size:2rem;opacity:0.7;">No ready orders.</div>`;
+
+        prepGrid.innerHTML = prep.length
+          ? prep.map(item => `
+              <div class="prep-tile">
+                <div class="prep-number">${item.num}</div>
+              </div>
+            `).join("")
+          : `<div style="text-align:center;font-size:1.2rem;opacity:0.7;">No orders in preparation.</div>`;
+
+        waitingGrid.innerHTML = waiting.length
+          ? waiting.map(item => `
+              <div class="waiting-tile">
+                <div class="waiting-number">${item.num}</div>
+              </div>
+            `).join("")
+          : `<div style="text-align:center;font-size:1.2rem;opacity:0.7;">No waiting orders.</div>`;
+      });
+    });
+  </script>
+</body>
+</html>

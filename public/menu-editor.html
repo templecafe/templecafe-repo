@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/menu-editor.css">
+</head>
+
+<body>
+
+<!-- AUTH GUARD -->
+<script src="js/auth-guard.js"></script>
+
+<!-- APP SHELL -->
+<div class="app-shell">
+
+  <!-- TOP BAR -->
+  <header class="app-header">
+    <div class="app-header-left">
+      <div class="app-logo-circle">🛕</div>
+      <div class="app-title-block">
+        <div class="app-title">Menu Editor</div>
+        <div class="app-subtitle">Manage today’s offerings, presets, and ticker</div>
+      </div>
+    </div>
+
+    <div class="app-header-right">
+      <button id="btnDailyMenu" class="top-action-btn primary">Save Today’s Menu</button>
+      <button id="btnSavePreset" class="top-action-btn">Save Preset</button>
+      <button id="btnLoadPreset" class="top-action-btn">Load Preset</button>
+      <button id="btnDeletePreset" class="top-action-btn danger">Delete Preset</button>
+      <button id="btnTicker" class="top-action-btn subtle">Edit Ticker</button>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <section class="filter-bar">
+    <div class="filter-group">
+      <label class="filter-label">Search</label>
+      <input id="searchInput" type="text" class="filter-input" placeholder="Search by item name...">
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <select id="filterCategory" class="filter-select">
+        <option value="__all__">All Categories</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Selection</label>
+      <select id="filterSelection" class="filter-select">
+        <option value="all">All Items</option>
+        <option value="selected">Selected Only</option>
+        <option value="unselected">Unselected Only</option>
+      </select>
+    </div>
+
+    <div class="filter-group stats-group">
+      <div class="stat-pill">
+        <span class="stat-label">Total items:</span>
+        <span id="statTotalItems" class="stat-value">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Selected:</span>
+        <span id="statSelectedItems" class="stat-value">0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-layout">
+    <!-- LEFT: MENU CATEGORIES & CARDS -->
+    <section class="menu-panel">
+      <div id="menuContainer" class="container"></div>
+    </section>
+
+    <!-- RIGHT: TODAY’S MENU PREVIEW -->
+    <aside class="preview-panel">
+      <div class="preview-card">
+        <div class="preview-header">
+          <div>
+            <div class="preview-title">Today’s Menu Preview</div>
+            <div class="preview-subtitle">Shows what will appear on the TV</div>
+          </div>
+          <button id="btnClearSelection" class="top-action-btn subtle small">Clear All</button>
+        </div>
+        <div id="todayPreviewList" class="preview-list">
+          <div class="preview-empty">No items selected yet.</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- FLOATING ADD BUTTON -->
+  <button id="btnAddItem" class="fab-add">+ Add Item</button>
+</div>
+
+<!-- ITEM POPUP -->
+<div id="itemPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2 id="popupTitle">Edit Item</h2>
+
+    <img id="previewImage" src="">
+
+    <label>Name:</label>
+    <div style="position: relative; width:100%; margin-bottom:10px;">
+      <input id="itemName" type="text" autocomplete="off" style="width:100%; padding:8px;">
+      <div id="nameSuggestions"
+           style="position:absolute; top:100%; left:0; right:0; max-height:150px; overflow-y:auto; display:none; z-index:9999;">
+      </div>
+    </div>
+
+    <label>Price:</label>
+    <input id="itemPrice" type="text" inputmode="decimal"
+           style="width:100%; padding:8px; margin-bottom:10px;"
+           oninput="validatePrice(this)">
+
+    <label>Category:</label>
+    <select id="itemCategory" style="width:100%; padding:8px; margin-bottom:10px;"
+            onchange="handleCategoryChange()"></select>
+
+    <div id="newCategoryBox" style="display:none; margin-bottom:10px;">
+      <label>New Category Name:</label>
+      <input id="newCategoryInput" type="text" style="width:100%; padding:8px;">
+    </div>
+
+    <label>Image:</label>
+    <input id="itemImage" type="file" accept="image/*" onchange="previewFile()">
+
+    <div class="translation-box">
+      <div id="taLine">Tamil:</div>
+      <div id="teLine">Telugu:</div>
+      <div id="knLine">Kannada:</div>
+      <div id="hiLine">Hindi:</div>
+      <div id="mlLine">Malayalam:</div>
+    </div>
+
+    <button class="save-btn" id="btnSaveItem">Save</button>
+    <button class="cancel-btn" id="btnCancelItem">Cancel</button>
+  </div>
+</div>
+
+<!-- TICKER POPUP -->
+<div id="tickerPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Edit Ticker Message</h2>
+    <textarea id="tickerText"></textarea>
+    <button class="save-btn" id="btnSaveTicker">Save Ticker</button>
+    <button class="cancel-btn" id="btnCancelTicker">Cancel</button>
+  </div>
+</div>
+
+<!-- PRESET POPUPS -->
+<div id="presetSavePopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Save Current Menu as Preset</h2>
+    <label>Preset Name:</label>
+    <input id="presetNameInput" type="text" style="width:100%; padding:8px; margin-bottom:10px;">
+    <button class="save-btn" id="btnConfirmSavePreset">Save Preset</button>
+    <button class="cancel-btn" id="btnCancelSavePreset">Cancel</button>
+  </div>
+</div>
+
+<div id="presetLoadPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Load Preset</h2>
+    <div id="presetList"></div>
+    <button class="cancel-btn" id="btnCloseLoadPreset">Close</button>
+  </div>
+</div>
+
+<div id="presetDeletePopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Delete Preset</h2>
+    <div id="presetDeleteList"></div>
+    <button class="cancel-btn" id="btnCloseDeletePreset">Close</button>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="js/food-dictionary.js"></script>
+<script src="js/menu-editor.js"></script>
+
+</body>
+</html>

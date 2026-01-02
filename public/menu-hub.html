@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/menu-hub.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="config.js"></script>
+
+  <!-- AUTH GUARD -->
+  <script src="js/auth-guard.js"></script>
+</head>
+
+<body class="light">
+
+<div class="header">Menu Management</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle-container">
+  <label class="theme-switch">
+    <input type="checkbox" id="themeToggle">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<!-- MENU GRID -->
+<div class="menu-grid">
+
+  <div class="menu-card tile-sandal" data-link="menu-editor.html">
+    <div class="menu-icon">📚</div>
+    <div class="menu-title">Menu Database</div>
+  </div>
+
+  <div class="menu-card tile-maroon" data-link="daily-menu.html">
+    <div class="menu-icon">🗓️</div>
+    <div class="menu-title">Daily Menu</div>
+  </div>
+
+  <div class="menu-card tile-peacock" id="openDisplay">
+    <div class="menu-icon">📺</div>
+    <div class="menu-title">Menu TV Display</div>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div id="displayPopup" class="popup-overlay">
+  <div class="popup-box">
+    <h2>Select Display Type</h2>
+
+    <button class="popup-btn" data-fullscreen="menu-display-grid.html">TV Display</button>
+    <button class="popup-btn" data-fullscreen="mobile-menu.html">Mobile Menu</button>
+
+    <button class="popup-btn btn-cancel" id="closeDisplay">Cancel</button>
+  </div>
+</div>
+
+<div class="footer">
+  Temple Canteen Menu Hub · Version 1.0 · Designed by Volunteers
+</div>
+
+<!-- JS -->
+<script src="js/menu-hub.js"></script>
+
+</body>
+</html>

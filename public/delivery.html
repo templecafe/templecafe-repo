@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Delivery Desk</title>
+<!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/delivery.css">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-left">
+        <div class="header-title">
+          <h1>Order Delivery Desk</h1>
+          <span>Hand over completed orders to customers</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <img src="images/logo.png" class="center-logo" alt="Temple Logo">
+      </div>
+
+      <div class="header-right">
+        <div class="status-pill">Delivery Station</div>
+        <div id="clock"></div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+
+      <!-- Summary Pills -->
+      <section class="summary-bar">
+        <div class="summary-pill ready">
+          <span>Ready</span>
+          <span class="count" id="readyCount">0</span>
+        </div>
+        <div class="summary-pill incomplete">
+          <span>Partially Delivered</span>
+          <span class="count" id="incompleteCount">0</span>
+        </div>
+      </section>
+
+      <!-- Active Orders Grid -->
+      <section id="ordersContainer">
+        <div class="orders-grid" id="ordersGrid"></div>
+        <div id="emptyState" class="empty-state" style="display:none;">
+          No orders ready for delivery.
+        </div>
+      </section>
+
+      <!-- Delivered Toggle -->
+      <button id="showDeliveredBtn" class="delivered-toggle-btn">
+        Show Delivered Orders
+      </button>
+
+      <!-- Delivered Orders Section -->
+      <section id="deliveredContainer" class="delivered-section">
+        <h3>Delivered Orders</h3>
+        <div class="orders-grid" id="deliveredGrid"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- POPUP MODAL -->
+  <div class="modal-backdrop" id="orderModalBackdrop">
+    <div class="modal">
+
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Order Details</div>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+
+      <div id="modalStatusText" class="modal-status"></div>
+
+      <div id="modalMeta" class="modal-meta"></div>
+
+      <div class="modal-body">
+
+        <div id="modalItemsList"></div>
+
+        <div id="statusButtons">
+          <button class="status-btn ready-btn" data-status="ready">Mark Ready</button>
+          <button class="status-btn incomplete-btn" id="markIncompleteBtn">Mark Partial Delivered</button>
+          <button class="status-btn delivered-btn" data-status="delivered">Mark Delivered</button>
+        </div>
+
+        <div id="incompleteSection" style="display:none; margin-top:15px;">
+         <div class="modal-section-title">
+  Partial Delivered Reason <span class="optional-label">(Optional)</span>
+</div>
+<div class="optional-note">You may leave this blank.</div>
+
+          <div class="reason-option">
+            <input type="radio" name="incompleteReason" value="Missing Items">
+            <label>Missing Items</label>
+          </div>
+
+          <div class="reason-option">
+            <input type="radio" name="incompleteReason" value="Missing Chutney">
+            <label>Missing Chutney</label>
+          </div>
+
+          <div class="reason-option">
+            <input type="radio" name="incompleteReason" value="Missing Sambar">
+            <label>Missing Sambar</label>
+          </div>
+
+          <div class="reason-option">
+            <input type="radio" name="incompleteReason" value="Missing Drink">
+            <label>Missing Drink</label>
+          </div>
+
+          <div class="reason-option">
+            <input type="radio" name="incompleteReason" value="Other" id="reasonOther">
+            <label for="reasonOther">Other</label>
+          </div>
+
+          <div id="otherReasonBox" style="display:none; margin-top:8px;">
+            <input type="text" id="otherReasonInput" placeholder="Enter custom reason" />
+          </div>
+
+          <button id="submitIncompleteBtn" class="submit-btn">Submit</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script type="module" src="js/delivery.js"></script>
+
+</body>
+</html>

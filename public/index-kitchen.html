@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Canteen – Kitchen Screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/index-kitchen.css">
+</head>
+
+<body>
+
+<!-- ROLE CHECK -->
+<script src="js/auth-guard.js"></script>
+
+<h1>Kitchen – Orders Overview</h1>
+
+<!-- ⭐ FIXED: filter-bar class restored -->
+<div class="filter-bar">
+  
+
+  <button class="filter-btn filter-waiting"
+          id="filterWaiting"
+          data-filter="waiting">
+    ⏳ Waiting
+  </button>
+
+  <button class="filter-btn filter-prep"
+          id="in_preparation"
+          data-filter="in_preparation">
+    👨‍🍳 In Prep
+  </button>
+
+  <button class="filter-btn filter-ready"
+          id="filterReady"
+          data-filter="ready">
+    🔥 Ready
+  </button>
+
+  <button class="filter-btn filter-delivered"
+          id="filterDelivered"
+          data-filter="delivered">
+    📦 Delivered
+  </button>
+
+  <button class="filter-btn filter-all filter-active"
+          id="filterAll"
+          data-filter="all">
+    ⭐ All
+  </button>
+
+  <!-- Edit Menu Button -->
+<button class="edit-menu-btn" id="editMenuBtn">✏️ Edit Menu</button>
+</div>
+
+
+<div id="kitchenContainer" class="kitchen-container"></div>
+
+<audio id="alertSound" src="sounds/waiting-alert.mp3"></audio>
+
+<!-- ⭐ FIXED: popup id matches CSS exactly -->
+<div id="kitchenPopup">
+  <div id="kitchenPopupBox">
+    <h2 id="kitchenPopupTitle">Update Order</h2>
+
+    <button class="popup-btn btn-accept" onclick="kitchenAcceptOrder()">Accept Order (Start Preparation)</button>
+    <button class="popup-btn btn-ready" onclick="kitchenSetReady()">Mark as READY</button>
+    <button class="popup-btn btn-cancel" onclick="closeKitchenPopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="js/index-kitchen.js"></script>
+
+</body>
+</html>

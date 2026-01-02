@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Status – Hindu Temple of St. Louis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/order-status.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <img src="images/logo.png" class="header-logo" alt="Temple Logo">
+    <div class="header-text">
+      <div class="header-title">Hindu Temple of St. Louis</div>
+      <div class="header-subtitle">Cafeteria Order Status</div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <label class="input-label">Enter Your Order Number</label>
+
+    <div class="input-row">
+      <input
+        id="inputBox"
+        type="number"
+        step="1"
+        inputmode="numeric"
+        pattern="\d*"
+        placeholder="e.g., 102"
+      />
+    </div>
+
+    <button id="getStatusBtn" class="refresh-btn">Refresh</button>
+
+    <div class="auto-note">Status updates automatically</div>
+
+    <div id="statusBox" class="status-card">
+      <div class="status-box-frame">Enter an order number above</div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Powered by Hindu Temple of St. Louis Cafeteria
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="config.js"></script>
+  <script src="js/order-status.js"></script>
+
+</body>
+</html>
