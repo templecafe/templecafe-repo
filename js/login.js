@@ -1,8 +1,6 @@
 // Supabase init
 const supabaseClient = window.supabaseClient;
 
-
-
 /* ---------------------- ELEMENTS ---------------------- */
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
@@ -56,9 +54,10 @@ function closeSignupSuccess() {
   loginForm.classList.remove("hidden");
 }
 
-/* ---------------------- AUDIT LOGGING ---------------------- */
+/* ---------------------- AUDIT LOGGING (v2 SAFE) ---------------------- */
 async function logAudit(action, details = {}) {
-  const { data: { user } } = await supabaseClient.auth.getUser();
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  const user = session?.user;
   if (!user) return;
 
   await supabaseClient.from("audit_logs").insert({
@@ -89,7 +88,7 @@ backToLoginBtn.addEventListener("click", () => {
   loginForm.classList.remove("hidden");
 });
 
-/* ---------------------- LOGIN ---------------------- */
+/* ---------------------- LOGIN (v2 CORRECT) ---------------------- */
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -108,19 +107,22 @@ loginForm.addEventListener("submit", async (e) => {
 
   if (error) {
     hideLoading();
-    logAudit("login_failed", { email });
+    logAudit("login_failed", { targetEmail: email });
 
     let msg = "Something went wrong. Please try again.";
     if (error.message.includes("Invalid login credentials")) msg = "Incorrect email or password.";
     showError(msg);
-  } else {
-    logAudit("login", { method: "email" });
-    hideLoading();
-    showSuccessAndRedirect();
+    return;
   }
+
+  hideLoading();
+  showSuccessAndRedirect();
+
+  // Log audit AFTER redirect to avoid blocking login
+  setTimeout(() => logAudit("login", { method: "email" }), 1500);
 });
 
-/* ---------------------- SIGNUP ---------------------- */
+/* ---------------------- SIGNUP (v2 CORRECT) ---------------------- */
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -150,50 +152,56 @@ signupForm.addEventListener("submit", async (e) => {
     if (error.message.includes("already registered")) msg = "This email is already registered.";
     if (error.message.includes("Password")) msg = "Password must be at least 6 characters.";
     showError(msg);
-  } else {
-    // Insert into users table
-    await supabaseClient.from("users").insert({
-      uid: data.user.id,
-      email: data.user.email,
-      role: "guest",
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString()
-    });
-
-    // Insert into role_requests table
-    await supabaseClient.from("role_requests").insert({
-      uid: data.user.id,
-      email: data.user.email,
-      status: "pending",
-      timestamp: new Date().toISOString()
-    });
-
-    logAudit("signup", { method: "email" });
-
-    hideLoading();
-    successOverlay.classList.remove("hidden");
-
-    setTimeout(() => {
-      successOverlay.classList.add("hidden");
-      signupSuccessPopup.classList.remove("hidden");
-    }, 1200);
+    return;
   }
+
+  // Insert into users table
+  await supabaseClient.from("users").insert({
+    uid: data.user.id,
+    email: data.user.email,
+    role: "guest",
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date().toISOString()
+  });
+
+  // Insert into role_requests table
+  await supabaseClient.from("role_requests").insert({
+    uid: data.user.id,
+    email: data.user.email,
+    status: "pending",
+    timestamp: new Date().toISOString()
+  });
+
+  hideLoading();
+  successOverlay.classList.remove("hidden");
+
+  setTimeout(() => {
+    successOverlay.classList.add("hidden");
+    signupSuccessPopup.classList.remove("hidden");
+  }, 1200);
+
+  setTimeout(() => logAudit("signup", { method: "email" }), 1500);
 });
 
-/* ---------------------- GOOGLE LOGIN ---------------------- */
+/* ---------------------- GOOGLE LOGIN (v2 CORRECT) ---------------------- */
 googleLoginBtn.addEventListener("click", async () => {
   showLoading();
 
   const { data, error } = await supabaseClient.auth.signInWithOAuth({
-    provider: "google"
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin + "/index.html"
+    }
   });
 
   if (error) {
     hideLoading();
     showError("Google sign-in was cancelled or failed.");
-  } else {
-    logAudit("login", { method: "google" });
-    hideLoading();
-    showSuccessAndRedirect();
+    return;
   }
+
+  hideLoading();
+  showSuccessAndRedirect();
+
+  setTimeout(() => logAudit("login", { method: "google" }), 1500);
 });
