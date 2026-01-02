@@ -4,14 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------------------- DOM ELEMENTS ---------------------- */
   const welcomeScreen = document.getElementById("welcomeScreen");
   const protectedTiles = document.getElementById("protectedTiles");
-  const welcomeBox = document.getElementById("welcomeBox");
   const welcomeName = document.getElementById("welcomeName");
-  const lastLogin = document.getElementById("lastLogin");
   const roleBadge = document.getElementById("roleBadge");
+  const lastLogin = document.getElementById("lastLogin");
   const pendingBadge = document.getElementById("pendingBadge");
-  const offlineBanner = document.getElementById("offlineBanner");
 
-  const tileDelivery = document.getElementById("tileDelivery");
+  const tileDesk = document.getElementById("tileDesk");
   const tileMenuHub = document.getElementById("tileMenuHub");
   const tileDisplay = document.getElementById("tileDisplay");
   const tileUserRoles = document.getElementById("tileUserRoles");
@@ -24,58 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutLink = document.getElementById("logoutLink");
   const requestRoleBtn = document.getElementById("requestRoleBtn");
 
-  /* ---------------------- DELIVERY POPUP ---------------------- */
-  const deliveryPopup = document.getElementById("deliveryPopup");
-  const deliveryOrdersList = document.getElementById("deliveryOrdersList");
-  const closeDeliveryPopupBtn = document.getElementById("closeDeliveryPopup");
+  /* ---------------------- DESK POPUP ---------------------- */
+  const deskPopup = document.getElementById("deskPopup");
+  const closeDeskPopupBtn = document.getElementById("closeDeskPopup");
 
-  tileDelivery.addEventListener("click", openDeliveryPopup);
-  closeDeliveryPopupBtn.addEventListener("click", () => deliveryPopup.classList.add("hidden"));
+  // Open Desk popup
+  tileDesk.addEventListener("click", () => {
+    deskPopup.classList.remove("hidden");
+  });
 
-  async function openDeliveryPopup() {
-    deliveryPopup.classList.remove("hidden");
-    await loadDeliveryOrders();
-  }
-
-  async function loadDeliveryOrders() {
-    deliveryOrdersList.innerHTML = "<p>Loading...</p>";
-
-    const { data, error } = await supabaseClient
-      .from("orders")
-      .select("*")
-      .eq("status", "ready")
-      .order("placedAt", { ascending: true });
-
-    if (error) {
-      deliveryOrdersList.innerHTML = "<p>Error loading orders.</p>";
-      return;
-    }
-
-    if (!data.length) {
-      deliveryOrdersList.innerHTML = "<p>No orders ready for delivery.</p>";
-      return;
-    }
-
-    deliveryOrdersList.innerHTML = "";
-
-    data.forEach(order => {
-      const div = document.createElement("div");
-      div.classList.add("delivery-item");
-
-      div.innerHTML = `
-        <span>Order #${order.id} — ${order.location}</span>
-        <button data-id="${order.id}">Deliver</button>
-      `;
-
-      div.querySelector("button").addEventListener("click", () => markDelivered(order.id));
-      deliveryOrdersList.appendChild(div);
-    });
-  }
-
-  async function markDelivered(orderId) {
-    await supabaseClient.from("orders").update({ status: "delivered" }).eq("id", orderId);
-    loadDeliveryOrders();
-  }
+  // Close Desk popup
+  closeDeskPopupBtn.addEventListener("click", () => {
+    deskPopup.classList.add("hidden");
+  });
 
   /* ---------------------- ROLE LOGIC ---------------------- */
   function showTilesBasedOnRole(role) {
@@ -100,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (role === "delivery") {
-      tileDelivery.classList.remove("hidden");
+      tileDesk.classList.remove("hidden");   // Desk tile for delivery role
       logoutLink.classList.remove("hidden");
     }
 

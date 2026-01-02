@@ -64,7 +64,7 @@
 
     <div class="tiles">
 
-      <div id="tileDelivery" class="tile tile-green">
+      <div id="tileDesk" class="tile tile-green">
         <span class="icon">🚚</span>
         Desk Screens
       </div>
@@ -137,7 +137,28 @@
 
   </div>
 
-  <!-- DELIVERY POPUP (correct one) -->
+  <!-- DESK POPUP (Counter 1, 2, 3) -->
+  <div id="deskPopup" class="overlay hidden">
+    <div class="popup">
+      <h2>Select Desk Screen</h2>
+
+      <button class="popup-btn gold-btn" onclick="openPage('index-assembly.html')">
+        Counter 1 – Order Assembly Desk
+      </button>
+
+      <button class="popup-btn green-btn" onclick="openPage('delivery.html')">
+        Counter 2 – Order Delivery Desk
+      </button>
+
+      <button class="popup-btn bronze-btn" onclick="openPage('incomplete.html')">
+        Counter 3 – Partial Delivery Desk
+      </button>
+
+      <button class="popup-btn red-btn" id="closeDeskPopup">Close</button>
+    </div>
+  </div>
+
+  <!-- DELIVERY ORDERS POPUP (Supabase) -->
   <div id="deliveryPopup" class="popup-overlay hidden">
     <div class="popup-box delivery-box">
       <h2>Delivery Orders</h2>
