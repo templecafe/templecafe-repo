@@ -107,4 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
     showTilesBasedOnRole(role);
   });
 
+  /* ---------------------- PAGE NAVIGATION ---------------------- */
+  function openPage(url) {
+    window.location.href = url;
+  }
+
+  // Expose openPage globally so HTML onclick can use it
+  window.openPage = openPage;
+
 });
